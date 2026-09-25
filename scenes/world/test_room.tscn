@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(36, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_horizontal_wall"]
+size = Vector2(1200, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical_wall"]
+size = Vector2(40, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_wide"]
+size = Vector2(180, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_tall"]
+size = Vector2(36, 140)
+
+[node name="TestRoom" type="Node2D"]
+
+[node name="Floor" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-580, -300, 580, -300, 580, 300, -580, 300)
+color = Color(0.12, 0.16, 0.2, 1)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(0, 120)
+script = ExtResource("1_player")
+
+[node name="Sprite" type="Polygon2D" parent="Player"]
+polygon = PackedVector2Array(-18, -18, 18, -18, 18, 18, -18, 18)
+color = Color(0.25, 0.78, 0.94, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_player")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+limit_left = -600
+limit_top = -340
+limit_right = 600
+limit_bottom = 340
+
+[node name="TopWall" type="StaticBody2D" parent="."]
+position = Vector2(0, -320)
+
+[node name="Visual" type="Polygon2D" parent="TopWall"]
+polygon = PackedVector2Array(-600, -20, 600, -20, 600, 20, -600, 20)
+color = Color(0.34, 0.38, 0.46, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
+shape = SubResource("RectangleShape2D_horizontal_wall")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 320)
+
+[node name="Visual" type="Polygon2D" parent="BottomWall"]
+polygon = PackedVector2Array(-600, -20, 600, -20, 600, 20, -600, 20)
+color = Color(0.34, 0.38, 0.46, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
+shape = SubResource("RectangleShape2D_horizontal_wall")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-600, 0)
+
+[node name="Visual" type="Polygon2D" parent="LeftWall"]
+polygon = PackedVector2Array(-20, -340, 20, -340, 20, 340, -20, 340)
+color = Color(0.34, 0.38, 0.46, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_vertical_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(600, 0)
+
+[node name="Visual" type="Polygon2D" parent="RightWall"]
+polygon = PackedVector2Array(-20, -340, 20, -340, 20, 340, -20, 340)
+color = Color(0.34, 0.38, 0.46, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_vertical_wall")
+
+[node name="CenterObstacle" type="StaticBody2D" parent="."]
+position = Vector2(-180, -40)
+
+[node name="Visual" type="Polygon2D" parent="CenterObstacle"]
+polygon = PackedVector2Array(-90, -18, 90, -18, 90, 18, -90, 18)
+color = Color(0.85, 0.48, 0.28, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CenterObstacle"]
+shape = SubResource("RectangleShape2D_obstacle_wide")
+
+[node name="SideObstacle" type="StaticBody2D" parent="."]
+position = Vector2(240, 100)
+
+[node name="Visual" type="Polygon2D" parent="SideObstacle"]
+polygon = PackedVector2Array(-18, -70, 18, -70, 18, 70, -18, 70)
+color = Color(0.85, 0.48, 0.28, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SideObstacle"]
+shape = SubResource("RectangleShape2D_obstacle_tall")
