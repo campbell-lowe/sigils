@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/world/test_room.gd" id="2_room"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(36, 36)
@@ -17,7 +18,11 @@ size = Vector2(180, 36)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_tall"]
 size = Vector2(36, 140)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
+radius = 100.0
+
 [node name="TestRoom" type="Node2D"]
+script = ExtResource("2_room")
 
 [node name="Floor" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-580, -300, 580, -300, 580, 300, -580, 300)
@@ -101,3 +106,141 @@ color = Color(0.85, 0.48, 0.28, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SideObstacle"]
 shape = SubResource("RectangleShape2D_obstacle_tall")
+
+[node name="Becca" type="Node2D" parent="."]
+position = Vector2(300, -140)
+
+[node name="Sprite" type="Polygon2D" parent="Becca"]
+polygon = PackedVector2Array(-18, -24, 18, -24, 24, 18, -24, 18)
+color = Color(0.78, 0.38, 0.82, 1)
+
+[node name="Name" type="Label" parent="Becca"]
+offset_left = -30.0
+offset_top = 28.0
+offset_right = 30.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.95, 0.88, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Becca"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="Becca"]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Becca/InteractionArea"]
+shape = SubResource("CircleShape2D_interaction")
+
+[node name="Keeper" type="Node2D" parent="."]
+position = Vector2(-280, 180)
+
+[node name="Sprite" type="Polygon2D" parent="Keeper"]
+polygon = PackedVector2Array(-20, -28, 20, -28, 26, 18, -26, 18)
+color = Color(0.42, 0.7, 0.5, 1)
+
+[node name="Name" type="Label" parent="Keeper"]
+offset_left = -45.0
+offset_top = 28.0
+offset_right = 45.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.82, 0.96, 0.84, 1)
+theme_override_font_sizes/font_size = 18
+text = "Keeper"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="Keeper"]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Keeper/InteractionArea"]
+shape = SubResource("CircleShape2D_interaction")
+
+[node name="Fountain" type="Node2D" parent="."]
+position = Vector2(-380, -190)
+
+[node name="Basin" type="Polygon2D" parent="Fountain"]
+polygon = PackedVector2Array(-46, -20, 46, -20, 58, 20, -58, 20)
+color = Color(0.28, 0.48, 0.6, 1)
+
+[node name="Fire" type="Polygon2D" parent="Fountain"]
+polygon = PackedVector2Array(0, -72, 28, -18, 16, 24, -18, 24, -30, -18)
+color = Color(0.98, 0.48, 0.18, 1)
+
+[node name="Name" type="Label" parent="Fountain"]
+offset_left = -90.0
+offset_top = 34.0
+offset_right = 90.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 0.82, 0.46, 1)
+theme_override_font_sizes/font_size = 18
+text = "Fountain of Fire"
+horizontal_alignment = 1
+
+[node name="SigilEffect" type="Polygon2D" parent="Fountain"]
+polygon = PackedVector2Array(0, -58, 14, -24, 50, -18, 22, 8, 30, 46, 0, 26, -30, 46, -22, 8, -50, -18, -14, -24)
+color = Color(0.96, 0.78, 0.2, 0.9)
+z_index = 2
+
+[node name="InteractionArea" type="Area2D" parent="Fountain"]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fountain/InteractionArea"]
+shape = SubResource("CircleShape2D_interaction")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Objective" type="Label" parent="Interface"]
+offset_left = 28.0
+offset_top = 24.0
+offset_right = 600.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.9, 0.92, 0.98, 1)
+theme_override_font_sizes/font_size = 20
+text = "Objective: Speak with Becca."
+
+[node name="InteractionPrompt" type="Label" parent="Interface"]
+offset_left = 326.0
+offset_top = 40.0
+offset_right = 826.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.95, 0.88, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Press E to talk to Becca"
+horizontal_alignment = 1
+
+[node name="DialogueBox" type="ColorRect" parent="Interface"]
+offset_left = 70.0
+offset_top = 470.0
+offset_right = 1082.0
+offset_bottom = 610.0
+color = Color(0.04, 0.05, 0.08, 0.94)
+
+[node name="Speaker" type="Label" parent="Interface/DialogueBox"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(0.78, 0.38, 0.82, 1)
+theme_override_font_sizes/font_size = 24
+text = "Becca"
+
+[node name="Dialogue" type="Label" parent="Interface/DialogueBox"]
+offset_left = 24.0
+offset_top = 55.0
+offset_right = 950.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0.95, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Stay close to me, Andrea. The palace can be overwhelming."
+autowrap_mode = 2
+
+[node name="Hint" type="Label" parent="Interface/DialogueBox"]
+offset_left = 820.0
+offset_top = 105.0
+offset_right = 980.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(0.62, 0.66, 0.75, 1)
+theme_override_font_sizes/font_size = 16
+text = "Press E to close"
+horizontal_alignment = 2
